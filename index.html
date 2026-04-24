@@ -2795,7 +2795,7 @@ countUp('cnt-rep',2.3,1800,1);cuObs.disconnect()}
   STATES.forEach(([name,path,hot])=>{
     const p=document.createElementNS('http://www.w3.org/2000/svg','path');
     p.setAttribute('d',path);p.setAttribute('class',hot?'st hot':'st');p.setAttribute('data-name',name);
-    p.addEventListener('mouseenter',()=>{tname.textContent=name;tstatus.textContent=hot?'🔴 High Activity — Ready to Buy':'✓ Available — We Buy Here';tstatus.className='mtt-status '+(hot?'hot':'avail');tooltip.classList.add('vis')});
+    p.addEventListener('mouseenter',()=>{tname.textContent=name;tstatus.textContent=hot?'🔴 Do not buy here':'✓ Available — We Buy Here';tstatus.className='mtt-status '+(hot?'hot':'avail');tooltip.classList.add('vis')});
     p.addEventListener('mousemove',e=>{tooltip.style.left=e.clientX+'px';tooltip.style.top=e.clientY+'px'});
     p.addEventListener('mouseleave',()=>tooltip.classList.remove('vis'));
     p.addEventListener('click',()=>{const addr=document.getElementById('f-address');if(addr){addr.focus();addr.placeholder='Enter your address in '+name+'...'}window.scrollTo({top:document.getElementById('cash-contact-offer').offsetTop-100,behavior:'smooth'})});
