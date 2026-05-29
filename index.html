@@ -28,7 +28,7 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "RealEstateAgent",
+      "@type": "RealEstateAgency",
       "@id": "https://wranglerhomes.com/#organization",
       "name": "Wrangler Homes",
       "url": "https://wranglerhomes.com",
@@ -58,6 +58,15 @@
         "contactType": "customer service",
         "email": "sales@wranglerhomes.com",
         "availableLanguage": "English"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://wranglerhomes.com/#website",
+      "url": "https://wranglerhomes.com",
+      "name": "Wrangler Homes",
+      "publisher": {
+        "@id": "https://wranglerhomes.com/#organization"
       }
     },
     {
