@@ -1,0 +1,135 @@
+
+/* 
+tcpa consent text 
+*/
+
+.tcpa-consent {
+    margin: 15px 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.tcpa-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+}
+
+.checkbox-container {
+  display: flex;
+  gap: 20px;
+  border-radius: 5px;  
+}
+
+.ios-checkbox {
+  --checkbox-size: 20px;
+  --checkbox-color: #B12234;
+  --checkbox-bg: #B12234;
+  --checkbox-border: #B12234;
+
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ios-checkbox input {
+  display: none;
+}
+
+.checkbox-wrapper {
+  position: relative;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  border-radius: 5px;
+  transition: transform 0.2s ease;
+  margin-right: 8px;
+}
+
+.checkbox-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  border: 2px solid var(--checkbox-border);
+  background: #141F37;
+  transition: all 0.2s ease;
+}
+
+.checkbox-icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 80%;
+  height: 80%;
+  color: white;
+  transform: scale(0);
+  transition: all 0.2s ease;
+}
+
+.check-path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  transition: stroke-dashoffset 0.3s ease 0.1s;
+}
+
+.ios-checkbox input:checked + .checkbox-wrapper .checkbox-bg {
+  background: var(--checkbox-color);
+  border-color: var(--checkbox-color);
+}
+
+.ios-checkbox input:checked + .checkbox-wrapper .checkbox-icon {
+  transform: scale(1);
+}
+
+.ios-checkbox input:checked + .checkbox-wrapper .check-path {
+  stroke-dashoffset: 0;
+}
+
+.ios-checkbox:hover .checkbox-wrapper {
+  transform: scale(1.05);
+}
+
+.ios-checkbox:active .checkbox-wrapper {
+  transform: scale(0.95);
+}
+
+.ios-checkbox input:focus + .checkbox-wrapper .checkbox-bg {
+  box-shadow: 0 0 0 4px var(--checkbox-bg);
+}
+
+.ios-checkbox.red {
+  --checkbox-color: #B12234;
+  --checkbox-bg: #B12234
+  --checkbox-border: #B12234;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.ios-checkbox input:checked + .checkbox-wrapper {
+  animation: bounce 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tcpa-link {
+    color: #B12234;
+    text-decoration: underline;
+    transition: all 0.3s ease-in;
+}
+
+.tcpa-link:hover {
+    color: #8B1A27;
+}
+
+.tcpa-text {
+    display: inline;
+    color: #6f6f6f;
+}
