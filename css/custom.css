@@ -23,10 +23,10 @@ tcpa consent text
 }
 
 .ios-checkbox {
-  --checkbox-size: 20px;
-  --checkbox-color: #B12234;
-  --checkbox-bg: #B12234;
-  --checkbox-border: #B12234;
+  --checkbox-size: 17px;
+  --checkbox-color: #C8960C;
+  --checkbox-bg: #C8960C;
+  --checkbox-border: #C8960C;
 
   position: relative;
   display: inline-block;
@@ -100,7 +100,7 @@ tcpa consent text
 }
 
 .ios-checkbox.red {
-  --checkbox-color: #B12234;
+  --checkbox-color: #C8960C;
   --checkbox-bg: #B12234
   --checkbox-border: #B12234;
 }
@@ -120,7 +120,7 @@ tcpa consent text
 }
 
 .tcpa-link {
-    color: #B12234;
+    color: #C8960C;
     text-decoration: underline;
     transition: all 0.3s ease-in;
 }
