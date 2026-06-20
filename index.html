@@ -4806,6 +4806,27 @@
       }
     }
 
+    @keyframes checkboxShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-4px); }
+      40% { transform: translateX(4px); }
+      60% { transform: translateX(-3px); }
+      80% { transform: translateX(3px); }
+    }
+
+    .tcpa-consent.has-err {
+      animation: checkboxShake 0.4s ease;
+    }
+
+    .tcpa-consent.has-err .checkbox-wrapper {
+      box-shadow: 0 0 0 2px rgba(178, 34, 52, 0.7);
+      border-radius: 4px;
+    }
+
+    .tcpa-consent.has-err .tcpa-text {
+      color: rgba(255, 96, 96, 0.95);
+    }
+
     @media(max-width:480px) {
       #nav {
         padding: 8px 12px
@@ -5108,11 +5129,11 @@
             <button class="hf-btn hf-back" id="step3-back"><span>Back</span></button>
           </div>
           <div class="hf-note">🔒 100% Private &amp; Secure · No Obligation · No Spam</div>
-          <div class="tcpa-consent">
+          <div class="tcpa-consent" id="tcpa-terms-wrap">
             <label class="tcpa-label">
               <div class="checkbox-container">
                 <label class="ios-checkbox red">
-                  <input type="checkbox" />
+                  <input type="checkbox"  id="tcpa-terms-checkbox" />
                   <div class="checkbox-wrapper">
                     <div class="checkbox-bg"></div>
                     <svg class="checkbox-icon" viewBox="0 0 24 24" fill="none">
@@ -5134,11 +5155,11 @@
               </span>
             </label>
           </div>
-          <div class="tcpa-consent">
+          <div class="tcpa-consent"  id="tcpa-sms-wrap">
             <label class="tcpa-label">
               <div class="checkbox-container">
                 <label class="ios-checkbox red">
-                  <input type="checkbox" />
+                  <input type="checkbox"  id="tcpa-sms-checkbox"  />
                   <div class="checkbox-wrapper">
                     <div class="checkbox-bg"></div>
                     <svg class="checkbox-icon" viewBox="0 0 24 24" fill="none">
@@ -6334,6 +6355,7 @@
       <button class="modal-close-btn" id="modal-close-btn">Close — I'll Await My Offer</button>
     </div>
   </div>
+  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:99999;"></canvas>
 
   <script>
     /* LOADER */
@@ -6376,6 +6398,20 @@
           row.classList.toggle('has-err', !pass); el.classList.toggle('err', !pass);
           if (!pass) ok = false;
         });
+      const termsBox = document.getElementById('tcpa-terms-checkbox');
+      const smsBox = document.getElementById('tcpa-sms-checkbox');
+      const termsWrap = document.getElementById('tcpa-terms-wrap');
+      const smsWrap = document.getElementById('tcpa-sms-wrap');
+
+      [[termsBox, termsWrap], [smsBox, smsWrap]].forEach(([box, wrap]) => {
+        if (!box.checked) {
+          ok = false;
+          wrap.classList.add('has-err');
+          setTimeout(() => wrap.classList.remove('has-err'), 500);
+        } else {
+          wrap.classList.remove('has-err');
+        }
+      });
       } else if (step === 2) {
         [['row-address', 'f-address', v => v.length >= 5], ['row-type', 'f-type', v => v !== '']].forEach(([rid, eid, fn]) => {
           const row = document.getElementById(rid), el = document.getElementById(eid);
@@ -6439,6 +6475,8 @@
           timeline: document.getElementById('f-timeline').value,
           condition: document.getElementById('f-condition').value,
           situation: document.getElementById('f-situation').value,
+          agreedTerms: document.getElementById('tcpa-terms-checkbox').checked,
+          agreedSms: document.getElementById('tcpa-sms-checkbox').checked,
           step: 3
         };
         fetch('https://api.wranglerhomes.com/api/lead', {
@@ -6453,7 +6491,11 @@
 
     /* MODAL */
     const modal = document.getElementById('success-modal');
-    function openModal() { modal.classList.add('show'); document.body.style.overflow = 'hidden' }
+    function openModal() { 
+      modal.classList.add('show'); 
+      document.body.style.overflow = 'hidden';
+      if (window.launchConfetti) window.launchConfetti();
+    }
     function closeModal() { modal.classList.remove('show'); document.body.style.overflow = '' }
     document.getElementById('modal-backdrop').addEventListener('click', closeModal);
     document.getElementById('modal-close-x').addEventListener('click', closeModal);
@@ -6684,6 +6726,83 @@
       const ms = document.getElementById('map-section');
       if (ms) mapObs.observe(ms);
     })();
+
+    /* CONFETTI */
+(function () {
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animationId = null;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize, { passive: true });
+  resize();
+
+  const colors = ['#B22234', '#C8960C', '#E8B84B', '#2C4B8A', '#ffffff'];
+
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: -20,
+      r: Math.random() * 6 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speedY: Math.random() * 3 + 2,
+      speedX: (Math.random() - 0.5) * 3,
+      rotation: Math.random() * 360,
+      rotationSpeed: (Math.random() - 0.5) * 10,
+      shape: Math.random() > 0.5 ? 'rect' : 'circle'
+    };
+  }
+
+  function launchConfetti() {
+    particles = [];
+    for (let i = 0; i < 150; i++) {
+      particles.push(createParticle());
+    }
+    if (!animationId) animate();
+    setTimeout(() => {
+      particles = [];
+    }, 3500);
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, i) => {
+      p.y += p.speedY;
+      p.x += p.speedX;
+      p.rotation += p.rotationSpeed;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rotation * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.6);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.r / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      if (p.y > canvas.height + 20) particles.splice(i, 1);
+    });
+
+    if (particles.length > 0) {
+      animationId = requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      animationId = null;
+    }
+  }
+
+  window.launchConfetti = launchConfetti;
+})();
   </script>
 </body>
 
