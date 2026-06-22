@@ -6425,16 +6425,6 @@
     }
     document.getElementById('step1-next').addEventListener('click', () => {
       if (validateStep(1)) {
-        // Capture data for step 1
-        const data = {
-          fname: document.getElementById('f-fname').value,
-          lname: document.getElementById('f-lname').value,
-          phone: document.getElementById('f-phone').value,
-          email: document.getElementById('f-email').value,
-          step: 1
-        };
-        // Send partial data (assuming endpoint exists)
-        fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
         showStep(2);
       } else {
         document.querySelector('.form-row.has-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -6443,15 +6433,6 @@
 
     document.getElementById('step2-next').addEventListener('click', () => {
       if (validateStep(2)) {
-        // Capture data for step 2
-        const data = {
-          address: document.getElementById('f-address').value,
-          type: document.getElementById('f-type').value,
-          timeline: document.getElementById('f-timeline').value,
-          step: 2
-        };
-        // Send partial data
-        fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
         showStep(3);
       } else {
         document.querySelector('.form-row.has-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -6498,7 +6479,7 @@
           agreedSms: document.getElementById('tcpa-sms-checkbox').checked,
           step: 3
         };
-        fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
+        fetch('https://api.wranglerhomes.com/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
         openModal();
       }
       else document.querySelector('.form-row.has-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
