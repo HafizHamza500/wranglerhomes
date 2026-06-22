@@ -6477,6 +6477,17 @@
       modal.classList.add('show'); 
       document.body.style.overflow = 'hidden';
       if (window.launchConfetti) window.launchConfetti();
+        ['f-fname','f-lname','f-phone','f-email','f-address','f-situation'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      ['f-type','f-timeline','f-condition'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.selectedIndex = 0;
+      });
+      document.getElementById('tcpa-terms-checkbox').checked = false;
+      document.getElementById('tcpa-sms-checkbox').checked = false;
+      showStep(1);
     }
     function closeModal() { modal.classList.remove('show'); document.body.style.overflow = '' }
     document.getElementById('modal-backdrop').addEventListener('click', closeModal);
