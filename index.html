@@ -42,7 +42,7 @@
       "logo": "https://wranglerhomes.com/assets/logown.png",
       "foundingDate": "1994",
       "description": "Wrangler Homes is a direct cash home buyer operating in all 50 US states since 1994. We purchase homes as-is with no repairs, no agent fees, and close in as little as 7 days.",
-      "telephone": "+18772692267",
+      "telephone": "+17063886215",
       "email": "sales@wranglerhomes.com",
       "address": {
         "@type": "PostalAddress",
@@ -55,7 +55,7 @@
       "openingHours": "Mo-Fr 09:00-17:00",
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+18772692267",
+        "telephone": "+17063886215",
         "contactType": "customer service",
         "email": "sales@wranglerhomes.com",
         "availableLanguage": "English"
@@ -5030,7 +5030,7 @@
       <li><a href="buy.html">Buy</a></li>
       <li><a href="#cta">Contact</a></li>
     </ul>
-    <a href="tel:18772692267" class="nav-tel">1 (877) 269-2267</a>
+    <a href="tel:17063886215" class="nav-tel">1 (706) 388-6215</a>
     <button class="nav-hamburger" id="hamburger"
       aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </nav>
@@ -5040,7 +5040,7 @@
       <li><a href="buy.html">Buy</a></li>
       <li><a href="#cta">Contact</a></li>
     </ul>
-    <a href="tel:18772692267" class="nav-tel">1 (877) 269-2267</a>
+    <a href="tel:17063886215" class="nav-tel">1 (706) 388-6215</a>
   </div>
 
   <!-- HERO -->
@@ -6245,7 +6245,7 @@
       <p class="cta-sub">Speak with a Wrangler Homes agent today — no pressure, just possibilities.</p>
       <div class="cta-btns">
         <a href="#hero"><button class="btn-main">Get Free Cash Offer</button></a>
-        <a href="tel:18772692267"><button class="btn-ghost-cta">Call 1 (877) 269-2267</button></a>
+        <a href="tel:17063886215"><button class="btn-ghost-cta">Call 1 (706) 388-6215</button></a>
       </div>
     </div>
   </section>
@@ -6425,6 +6425,16 @@
     }
     document.getElementById('step1-next').addEventListener('click', () => {
       if (validateStep(1)) {
+        // Capture data for step 1
+        const data = {
+          fname: document.getElementById('f-fname').value,
+          lname: document.getElementById('f-lname').value,
+          phone: document.getElementById('f-phone').value,
+          email: document.getElementById('f-email').value,
+          step: 1
+        };
+        // Send partial data (assuming endpoint exists)
+        fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
         showStep(2);
       } else {
         document.querySelector('.form-row.has-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -6433,6 +6443,15 @@
 
     document.getElementById('step2-next').addEventListener('click', () => {
       if (validateStep(2)) {
+        // Capture data for step 2
+        const data = {
+          address: document.getElementById('f-address').value,
+          type: document.getElementById('f-type').value,
+          timeline: document.getElementById('f-timeline').value,
+          step: 2
+        };
+        // Send partial data
+        fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
         showStep(3);
       } else {
         document.querySelector('.form-row.has-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -6479,11 +6498,7 @@
           agreedSms: document.getElementById('tcpa-sms-checkbox').checked,
           step: 3
         };
-        fetch('https://api.wranglerhomes.com/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-        }).catch(() => { });
+        fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
         openModal();
       }
       else document.querySelector('.form-row.has-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
