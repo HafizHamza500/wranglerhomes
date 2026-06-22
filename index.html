@@ -6398,20 +6398,6 @@
           row.classList.toggle('has-err', !pass); el.classList.toggle('err', !pass);
           if (!pass) ok = false;
         });
-      const termsBox = document.getElementById('tcpa-terms-checkbox');
-      const smsBox = document.getElementById('tcpa-sms-checkbox');
-      const termsWrap = document.getElementById('tcpa-terms-wrap');
-      const smsWrap = document.getElementById('tcpa-sms-wrap');
-
-      [[termsBox, termsWrap], [smsBox, smsWrap]].forEach(([box, wrap]) => {
-        if (!box.checked) {
-          ok = false;
-          wrap.classList.add('has-err');
-          setTimeout(() => wrap.classList.remove('has-err'), 500);
-        } else {
-          wrap.classList.remove('has-err');
-        }
-      });
       } else if (step === 2) {
         [['row-address', 'f-address', v => v.length >= 5], ['row-type', 'f-type', v => v !== '']].forEach(([rid, eid, fn]) => {
           const row = document.getElementById(rid), el = document.getElementById(eid);
@@ -6475,8 +6461,8 @@
           timeline: document.getElementById('f-timeline').value,
           condition: document.getElementById('f-condition').value,
           situation: document.getElementById('f-situation').value,
-          agreedTerms: document.getElementById('tcpa-terms-checkbox').checked,
-          agreedSms: document.getElementById('tcpa-sms-checkbox').checked,
+         agreedTerms: document.getElementById('tcpa-terms-checkbox').checked ? 'Yes' : 'No',
+         agreedSms: document.getElementById('tcpa-sms-checkbox').checked ? 'Yes' : 'No',
           step: 3
         };
         fetch('https://api.wranglerhomes.com/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
