@@ -6466,6 +6466,11 @@
           step: 3
         };
         fetch('https://api.wranglerhomes.com/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => { });
+        fetch('https://propstarportal.com/api/method/funnelplaneapp.vue_chat_api.submit_wrangler_lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).catch(() => { });
         openModal();
       }
       else document.querySelector('.form-row.has-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
